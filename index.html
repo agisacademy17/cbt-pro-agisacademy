@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CBT Modern - Portal Try Out & Ujian Online</title>
-    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,27 +27,22 @@
             }
         }
     </script>
-    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- KaTeX High-Speed & High-Level Math Rendering Engines -->
+    <!-- KaTeX for High-Speed Math Rendering -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            user-select: none;
+            user-select: none; /* Anti seleksi teks */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
         }
-        
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
@@ -64,8 +58,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-
-        /* Pseudo-Fullscreen Fallback for Sandboxed Iframes (Google Sites) */
+        /* Pseudo-Fullscreen Layout Fallback for sandboxed iframes (Google Sites) */
         .pseudo-fullscreen {
             position: fixed !important;
             top: 0 !important;
@@ -118,7 +111,7 @@
                 <div class="inline-flex px-3 py-1 bg-primary-100 text-primary-700 text-xs font-semibold rounded-full uppercase tracking-wider">
                     Sistem Evaluasi Pembelajaran Digital
                 </div>
-                <h2 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                 <h2 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
                     Sistem Ujian dan Try Out Mandiri <span class="text-primary-600">Agis Academy</span>
                 </h2>
                 <p class="text-slate-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
@@ -147,9 +140,9 @@
                     <div class="h-16 w-16 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary-600 group-hover:text-white transition duration-300">
                         <i class="fa-solid fa-user-shield text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Akses Administrator</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Admin</h3>
                     <p class="text-sm text-slate-500 leading-relaxed">
-                        Aksen dan fitur ini tersedia hanya untuk admin. Hubungi admin untuk informasi lebih lanjut
+                        Akses hanya untuk admin.
                     </p>
                     <div class="mt-6 text-xs font-bold text-slate-600 group-hover:text-primary-600 flex items-center space-x-1">
                         <span>Masuk Sebagai Admin</span>
@@ -334,7 +327,7 @@
                     </button>
                 </form>
                 <div class="mt-6 border-t border-slate-100 pt-4 text-center">
-                    <span class="text-xs text-slate-400 font-medium">Gunakan akun admin untuk akses halaman admin </span>
+                    <span class="text-xs text-slate-400 font-medium">Gunakan akun admin untuk mengakses halaman admin </span>
                 </div>
             </div>
         </section>
@@ -787,7 +780,7 @@
         </div>
     </div>
 
-    <!-- Modal 3: Soal Form (Advanced Editor with Error Resilient LaTeX Live Preview) -->
+    <!-- Modal 3: Soal Form (Advanced Editor with Dynamic Options) -->
     <div id="modalSoal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl w-full max-w-6xl p-6 border border-slate-100 shadow-xl my-8">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
@@ -821,69 +814,23 @@
                         <!-- Input Prompt & Gambar -->
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Butir Soal (Mendukung LaTeX tingkat tinggi, misal: $\iint_D (x^2+y^2)\,dx\,dy$)</label>
-                            <textarea id="soalFormPrompt" required rows="4" oninput="updateLiveSoalPreview()" placeholder="Ketik soal di sini. Gunakan $...$ untuk matematika inline atau $$...$$ untuk block math. Gunakan \\ untuk garis baru di lingkungan aligned/cases." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-primary-500 font-mono"></textarea>
+                            <textarea id="soalFormPrompt" required rows="4" oninput="updateLiveSoalPreview()" placeholder="Ketik soal di sini. Gunakan $...$ untuk matematika inline atau $$...$$ untuk block math." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-primary-500 font-mono"></textarea>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Link Gambar Lampiran (Opsional)</label>
                             <input type="url" id="soalFormGambar" oninput="updateLiveSoalPreview()" placeholder="https://..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-primary-500">
                         </div>
 
-                        <!-- INPUTS JAWABAN PILIHAN GANDA (PG) -->
-                        <div id="pgInputsContainer" class="space-y-3">
-                            <label class="block text-xs font-bold text-slate-500 uppercase">Pilihan Jawaban & Kunci</label>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" name="pgKunci" value="A" checked class="text-primary-600 focus:ring-primary-500">
-                                    <span class="text-xs font-bold text-slate-400">A</span>
-                                    <input type="text" id="soalOptA" oninput="updateLiveSoalPreview()" placeholder="Opsi A" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" name="pgKunci" value="B" class="text-primary-600 focus:ring-primary-500">
-                                    <span class="text-xs font-bold text-slate-400">B</span>
-                                    <input type="text" id="soalOptB" oninput="updateLiveSoalPreview()" placeholder="Opsi B" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" name="pgKunci" value="C" class="text-primary-600 focus:ring-primary-500">
-                                    <span class="text-xs font-bold text-slate-400">C</span>
-                                    <input type="text" id="soalOptC" oninput="updateLiveSoalPreview()" placeholder="Opsi C" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" name="pgKunci" value="D" class="text-primary-600 focus:ring-primary-500">
-                                    <span class="text-xs font-bold text-slate-400">D</span>
-                                    <input type="text" id="soalOptD" oninput="updateLiveSoalPreview()" placeholder="Opsi D" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" name="pgKunci" value="E" class="text-primary-600 focus:ring-primary-500">
-                                    <span class="text-xs font-bold text-slate-400">E</span>
-                                    <input type="text" id="soalOptE" oninput="updateLiveSoalPreview()" placeholder="Opsi E" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
+                        <!-- DYNAMIC CHOICES CONTAINER (Replaces fixed PG & MCMA) -->
+                        <div id="dynamicOptionsContainer" class="hidden space-y-3">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                                <label class="block text-xs font-bold text-slate-500 uppercase">Pilihan Jawaban & Tentukan Kunci</label>
+                                <button type="button" onclick="addModalOption()" class="px-2.5 py-1 bg-primary-50 text-primary-700 hover:bg-primary-100 rounded-lg text-[10px] font-bold border border-primary-100 transition flex items-center gap-1">
+                                    <i class="fa-solid fa-plus"></i> Tambah Pilihan / Opsi
+                                </button>
                             </div>
-                        </div>
-
-                        <!-- INPUTS JAWABAN PILIHAN GANDA KOMPLEKS (MCMA) -->
-                        <div id="mcmaInputsContainer" class="hidden space-y-3">
-                            <label class="block text-xs font-bold text-slate-500 uppercase">Pilihan Jawaban & Kunci (Bisa pilih lebih dari satu)</label>
-                            <div class="space-y-2">
-                                <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="mcmaKunciA" class="rounded text-primary-600">
-                                    <span class="text-xs font-bold text-slate-400">A</span>
-                                    <input type="text" id="soalOptMcmaA" oninput="updateLiveSoalPreview()" placeholder="Opsi A" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="mcmaKunciB" class="rounded text-primary-600">
-                                    <span class="text-xs font-bold text-slate-400">B</span>
-                                    <input type="text" id="soalOptMcmaB" oninput="updateLiveSoalPreview()" placeholder="Opsi B" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="mcmaKunciC" class="rounded text-primary-600">
-                                    <span class="text-xs font-bold text-slate-400">C</span>
-                                    <input type="text" id="soalOptMcmaC" oninput="updateLiveSoalPreview()" placeholder="Opsi C" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="mcmaKunciD" class="rounded text-primary-600">
-                                    <span class="text-xs font-bold text-slate-400">D</span>
-                                    <input type="text" id="soalOptMcmaD" oninput="updateLiveSoalPreview()" placeholder="Opsi D" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500">
-                                </div>
+                            <div id="modalOptionsList" class="space-y-2">
+                                <!-- Rendered dynamically by JavaScript -->
                             </div>
                         </div>
 
@@ -1008,7 +955,6 @@
             connected: false,
             activeTabAdmin: 'dashboard',
             
-            // Student Dummy Data updated with "password"
             siswaList: JSON.parse(localStorage.getItem('cbt_siswa')) || [
                 { id: 'S1', username: 'CBT-2026-001', password: '123', nama: 'Zahra Almira', status: true },
                 { id: 'S2', username: 'CBT-2026-002', password: '123', nama: 'Fajar Nugraha', status: true },
@@ -1071,6 +1017,11 @@
             examStarted: false
         };
 
+        // Modal Form Dynamic Options Variables
+        let currentModalOptions = []; 
+        let currentFormPgKunci = 'A';
+        let currentFormMcmaKunci = [];
+
         // Advanced KaTeX macros for high-level math notation
         const katexMacros = {
             "\\R": "\\mathbb{R}",
@@ -1086,9 +1037,8 @@
         };
 
         // HTML Escape and KaTeX Preprocessor to prevent broken markup inside sandboxed iframes
-        function safeEscapeHtmlForLatex(text) {
+        function safeEscapeHtml(text) {
             if (!text) return "";
-            // Safe replacement of typical tags keeping mathematical characters unmodified
             return text
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
@@ -1105,18 +1055,115 @@
                         {left: "$$", right: "$$", display: true},
                         {left: "$", right: "$", display: false},
                         {left: "\\(", right: "\\)", display: false},
+                        {left: "\\*", right: "\\*", display: false},
                         {left: "\\[", right: "\\]", display: true}
                     ],
-                    throwOnError: false, // Do not throw and break script execution on unfinished LaTeX
+                    throwOnError: false, 
                     errorColor: "#ef4444",
                     macros: katexMacros
                 });
             } catch (err) {
-                console.warn("KaTeX render bypass: typing formula incomplete", err);
+                console.warn("KaTeX render bypass on typing formula incomplete: ", err);
             }
         }
 
-        // UTILITY FUNCTION: CHECK IF QUESTION IS ANSWERED
+        // DYNAMIC OPTION BUILDERS & HANDLERS FOR ADMIN EDITOR
+        function renderModalOptions() {
+            const container = document.getElementById('modalOptionsList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const type = document.getElementById('soalFormTipe').value;
+
+            currentModalOptions.forEach((text, idx) => {
+                const letter = String.fromCharCode(65 + idx); // A, B, C, D...
+
+                let selectorHtml = '';
+                if (type === 'PG') {
+                    const isChecked = currentFormPgKunci === letter;
+                    selectorHtml = `
+                        <input type="radio" name="pgKunci" value="${letter}" ${isChecked ? 'checked' : ''} onchange="setFormPgKunci('${letter}')" class="text-primary-600 focus:ring-primary-500 h-4 w-4">
+                    `;
+                } else if (type === 'MCMA') {
+                    const isChecked = currentFormMcmaKunci.includes(letter);
+                    selectorHtml = `
+                        <input type="checkbox" onchange="toggleFormMcmaKunci('${letter}')" ${isChecked ? 'checked' : ''} class="rounded text-primary-600 focus:ring-primary-500 h-4 w-4">
+                    `;
+                }
+
+                const row = document.createElement('div');
+                row.className = "flex items-center space-x-2 bg-slate-50 p-2 rounded-xl border border-slate-200";
+                row.innerHTML = `
+                    <div class="flex items-center justify-center p-1">
+                        ${selectorHtml}
+                    </div>
+                    <span class="text-xs font-black text-slate-500 w-5 text-center">${letter}</span>
+                    <input type="text" value="${text}" oninput="updateModalOptionText(${idx}, this.value)" placeholder="Teks Pilihan ${letter}" class="flex-grow px-3 py-1.5 rounded-lg border border-slate-200 text-xs focus:ring-2 focus:ring-primary-500 bg-white">
+                    ${currentModalOptions.length > 2 ? `
+                        <button type="button" onclick="removeModalOption(${idx})" class="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition" title="Hapus opsi ${letter}">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    ` : ''}
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function setFormPgKunci(letter) {
+            currentFormPgKunci = letter;
+            updateLiveSoalPreview();
+        }
+
+        function toggleFormMcmaKunci(letter) {
+            const index = currentFormMcmaKunci.indexOf(letter);
+            if (index > -1) {
+                currentFormMcmaKunci.splice(index, 1);
+            } else {
+                currentFormMcmaKunci.push(letter);
+            }
+            updateLiveSoalPreview();
+        }
+
+        function updateModalOptionText(index, value) {
+            currentModalOptions[index] = value;
+            updateLiveSoalPreview();
+        }
+
+        function addModalOption() {
+            if (currentModalOptions.length >= 26) {
+                showToast("Batas maksimal pilihan jawaban adalah 26 (A-Z)!", "danger");
+                return;
+            }
+            currentModalOptions.push('');
+            renderModalOptions();
+            updateLiveSoalPreview();
+        }
+
+        function removeModalOption(index) {
+            if (currentModalOptions.length <= 2) {
+                showToast("Minimal harus memiliki 2 pilihan jawaban!", "danger");
+                return;
+            }
+            currentModalOptions.splice(index, 1);
+
+            // Shift keys/keys mapping adjustments
+            const oldPgKunciIdx = currentFormPgKunci.charCodeAt(0) - 65;
+            if (oldPgKunciIdx === index) {
+                currentFormPgKunci = 'A';
+            } else if (oldPgKunciIdx > index) {
+                currentFormPgKunci = String.fromCharCode(65 + oldPgKunciIdx - 1);
+            }
+
+            currentFormMcmaKunci = currentFormMcmaKunci
+                .map(letter => letter.charCodeAt(0) - 65)
+                .filter(idx => idx !== index)
+                .map(idx => idx > index ? idx - 1 : idx)
+                .map(idx => String.fromCharCode(65 + idx));
+
+            renderModalOptions();
+            updateLiveSoalPreview();
+        }
+
         function checkIsAnswered(question) {
             const ans = session.answers[question.id];
             if (!ans) return false;
@@ -1126,7 +1173,7 @@
             return false;
         }
 
-        // CUSTOM CONFIRM DIALOG SYSTEM
+        // CONFIRM DIALOG POPUP FALLBACK
         function showCustomConfirm(title, message, onOk, isDanger = false) {
             const modal = document.getElementById('customConfirmModal');
             const titleEl = document.getElementById('customConfirmTitle');
@@ -1160,7 +1207,6 @@
             };
         }
 
-        // SAVE STATE HELPER
         function saveToLocalStorage() {
             localStorage.setItem('cbt_siswa', JSON.stringify(state.siswaList));
             localStorage.setItem('cbt_kategori', JSON.stringify(state.kategoriList));
@@ -1168,7 +1214,7 @@
             localStorage.setItem('cbt_rekap', JSON.stringify(state.rekapHasil));
         }
 
-        // FETCH AND APPLY RE-SYNC DATA FROM CLOUD
+        // DATABASE INTEGRATION & SYNC ENGINES
         async function fetchAndApplyLatestData(url) {
             if (!url) return false;
             try {
@@ -1201,7 +1247,7 @@
             }
         }
 
-        // ONLOAD INITIALIZATION
+        // APP BOOTSTRAPLOAD
         window.onload = function() {
             saveToLocalStorage();
             generateGoogleAppsScriptCode();
@@ -1221,7 +1267,6 @@
             safeRenderMath(document.body);
         };
 
-        // TOAST NOTIFICATIONS
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -1246,7 +1291,7 @@
             }, 3000);
         }
 
-        // VIEW ROUTER
+        // ROUTING MANAGER
         function navigateTo(targetView) {
             if (session.examStarted && targetView !== 'siswaExam') {
                 showToast("Anda tidak bisa meninggalkan halaman ujian saat tes sedang berjalan!", "danger");
@@ -1281,7 +1326,6 @@
             }
         }
 
-        // LOGOUT SESSIONS
         function logoutSession() {
             showCustomConfirm("Keluar Portal", "Apakah Anda yakin ingin keluar dari sesi portal saat ini dan kembali ke beranda?", () => {
                 session.siswa = null;
@@ -1291,7 +1335,7 @@
             });
         }
 
-        // CLOUD DB CONNECTION MANAGERS
+        // SPREADSHEET CONFIGURATION MANAGERS
         function testStoredConnection() {
             if (state.gasUrl) {
                 document.getElementById('gasUrlInput').value = state.gasUrl;
@@ -1471,6 +1515,7 @@
             });
         }
 
+        // AUTHENTICATION CONTROLLERS
         async function handleSiswaLogin(event) {
             event.preventDefault();
             const username = document.getElementById('siswaUsername').value.trim();
@@ -1495,7 +1540,7 @@
             );
 
             if (!student) {
-                showToast("Username / No. Peserta atau Password Anda salah!", "danger");
+                showToast("Username atau Password Anda salah!", "danger");
                 return;
             }
 
@@ -1578,7 +1623,7 @@
             const user = document.getElementById('adminUsername').value.trim();
             const pass = document.getElementById('adminPassword').value;
 
-            if (user === 'admin' && pass === 'admin1122') {
+            if (user === 'admin' && pass === 'admin123') {
                 showToast("Otentikasi berhasil! Selamat datang Admin.", "success");
                 navigateTo('admin');
                 document.getElementById('adminUsername').value = '';
@@ -1588,7 +1633,7 @@
             }
         }
 
-        // ANTI-CHEATING WITH SPECIAL GOOGLE SITES STABLE VISIBILITY ONLY
+        // SECURITY & PROCTORING (ANTI-CHEAT LAYOUT)
         function initAntiCheating() {
             document.addEventListener('visibilitychange', handleCheatViolation);
             document.addEventListener('contextmenu', preventDefaultAction);
@@ -1618,7 +1663,6 @@
         }
 
         function handleCheatViolation() {
-            // Relies strictly on tab switching / minimize to avoid Google Site's false-positive outer frame focus loss
             if (!session.examStarted) return;
             if (document.visibilityState === 'hidden') {
                 session.cheatWarnings++;
@@ -1634,7 +1678,6 @@
             }
         }
 
-        // Google Sites Resistant Fullscreen Logic (Pseudo-Fullscreen Overlay Fallback)
         function enforceFullscreen() {
             try {
                 const docElm = document.documentElement;
@@ -1646,8 +1689,6 @@
             } catch(e) {
                 console.warn("Fullscreen API blocked by sandbox policies. Activating pseudo-fullscreen layout instead.");
             }
-            
-            // Safe fallback regardless of browser permission: scale outer layout visually
             document.body.classList.add('pseudo-fullscreen');
         }
 
@@ -1662,7 +1703,6 @@
             document.body.classList.remove('pseudo-fullscreen');
         }
 
-        // TIMER SYSTEM
         function startTimer() {
             clearInterval(session.timerInterval);
             session.timerInterval = setInterval(() => {
@@ -1682,7 +1722,7 @@
             }, 1000);
         }
 
-        // RENDER EXAM QUESTION
+        // EXAM INTERACTIVE LOADER
         function loadQuestion(index) {
             session.currentQuestionIdx = index;
             document.getElementById('activeQuestionIndexText').innerText = index + 1;
@@ -1760,7 +1800,6 @@
                 document.getElementById('btnBookmark').classList.remove('bg-amber-100', 'border-amber-400');
             }
 
-            // Trigger targeted secure math render
             setTimeout(() => {
                 safeRenderMath(promptEl);
                 safeRenderMath(answersBox);
@@ -1929,7 +1968,7 @@
             document.getElementById('siswaPassword').value = '';
         }
 
-        // ADMIN DASHBOARD CORE CONTROL
+        // ADMIN PANELS CONTROLLERS
         function setAdminTab(tabId) {
             state.activeTabAdmin = tabId;
             document.querySelectorAll('.admin-tab-btn').forEach(btn => {
@@ -2046,16 +2085,14 @@
             });
         }
 
-        // SECURE LIVE PREVIEW MECHANISM FOR SANBOXED IFRAMES
+        // LIVE SANDBOX RESILIENT PREVIEW (With dynamic choices rendering)
         function updateLiveSoalPreview() {
             const promptInput = document.getElementById('soalFormPrompt').value;
             const type = document.getElementById('soalFormTipe').value;
             const imgUrl = document.getElementById('soalFormGambar').value;
 
             const previewPrompt = document.getElementById('livePreviewPrompt');
-            
-            // Clean dynamic text translation keeping formulas isolated
-            previewPrompt.innerHTML = safeEscapeHtmlForLatex(promptInput);
+            previewPrompt.innerHTML = safeEscapeHtml(promptInput);
             if (imgUrl) {
                 previewPrompt.innerHTML += `<div class="mt-3 max-w-xs"><img src="${imgUrl}" class="rounded border border-slate-800" onerror="this.remove()"></div>`;
             }
@@ -2063,36 +2100,25 @@
             const previewAnswers = document.getElementById('livePreviewAnswers');
             previewAnswers.innerHTML = '';
 
-            if (type === 'PG') {
-                const optA = document.getElementById('soalOptA').value || '(kosong)';
-                const optB = document.getElementById('soalOptB').value || '(kosong)';
-                const optC = document.getElementById('soalOptC').value || '(kosong)';
-                const optD = document.getElementById('soalOptD').value || '(kosong)';
-                const optE = document.getElementById('soalOptE').value || '(kosong)';
+            if (type === 'PG' || type === 'MCMA') {
+                let optionsHtml = '<div class="text-xs text-slate-300 space-y-1.5 pl-2">';
+                currentModalOptions.forEach((text, idx) => {
+                    const letter = String.fromCharCode(65 + idx);
+                    
+                    let isCorrect = false;
+                    if (type === 'PG') isCorrect = currentFormPgKunci === letter;
+                    if (type === 'MCMA') isCorrect = currentFormMcmaKunci.includes(letter);
 
-                previewAnswers.innerHTML = `
-                    <div class="text-xs text-slate-300 space-y-1.5 pl-2">
-                        <div>A. ${safeEscapeHtmlForLatex(optA)}</div>
-                        <div>B. ${safeEscapeHtmlForLatex(optB)}</div>
-                        <div>C. ${safeEscapeHtmlForLatex(optC)}</div>
-                        <div>D. ${safeEscapeHtmlForLatex(optD)}</div>
-                        <div>E. ${safeEscapeHtmlForLatex(optE)}</div>
-                    </div>
-                `;
-            } else if (type === 'MCMA') {
-                const optA = document.getElementById('soalOptMcmaA').value || '(kosong)';
-                const optB = document.getElementById('soalOptMcmaB').value || '(kosong)';
-                const optC = document.getElementById('soalOptMcmaC').value || '(kosong)';
-                const optD = document.getElementById('soalOptMcmaD').value || '(kosong)';
-
-                previewAnswers.innerHTML = `
-                    <div class="text-xs text-slate-300 space-y-1.5 pl-2">
-                        <div>A. ${safeEscapeHtmlForLatex(optA)}</div>
-                        <div>B. ${safeEscapeHtmlForLatex(optB)}</div>
-                        <div>C. ${safeEscapeHtmlForLatex(optC)}</div>
-                        <div>D. ${safeEscapeHtmlForLatex(optD)}</div>
-                    </div>
-                `;
+                    optionsHtml += `
+                        <div class="flex items-center gap-1.5">
+                            <span class="h-1.5 w-1.5 rounded-full ${isCorrect ? 'bg-sky-400' : 'bg-transparent'}"></span>
+                            <span class="font-bold text-slate-400">${letter}.</span>
+                            <span>${safeEscapeHtml(text) || '<span class="text-slate-600 italic">(kosong)</span>'}</span>
+                        </div>
+                    `;
+                });
+                optionsHtml += '</div>';
+                previewAnswers.innerHTML = optionsHtml;
             } else if (type === 'BS') {
                 const bs1 = document.getElementById('soalBs1').value || '(pernyataan 1 kosong)';
                 const bs2 = document.getElementById('soalBs2').value || '(pernyataan 2 kosong)';
@@ -2100,18 +2126,18 @@
 
                 previewAnswers.innerHTML = `
                     <div class="text-xs text-slate-300 space-y-2 pl-2">
-                        <div>1. ${safeEscapeHtmlForLatex(bs1)} <span class="text-sky-400 font-bold">[B / S]</span></div>
-                        <div>2. ${safeEscapeHtmlForLatex(bs2)} <span class="text-sky-400 font-bold">[B / S]</span></div>
-                        <div>3. ${safeEscapeHtmlForLatex(bs3)} <span class="text-sky-400 font-bold">[B / S]</span></div>
+                        <div>1. ${safeEscapeHtml(bs1)} <span class="text-sky-400 font-bold">[B / S]</span></div>
+                        <div>2. ${safeEscapeHtml(bs2)} <span class="text-sky-400 font-bold">[B / S]</span></div>
+                        <div>3. ${safeEscapeHtml(bs3)} <span class="text-sky-400 font-bold">[B / S]</span></div>
                     </div>
                 `;
             }
 
-            // Centralized targeted KaTeX render prevents modal inputs keyboard defocusing or crash on typing
             safeRenderMath(previewPrompt);
             safeRenderMath(previewAnswers);
         }
 
+        // DATABASE COMPILATION LAYOUTS
         function renderQuestions() {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
@@ -2133,6 +2159,27 @@
 
                 const card = document.createElement('div');
                 card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3";
+                
+                let optionsListHtml = '';
+                if (q.tipe === 'PG' || q.tipe === 'MCMA') {
+                    optionsListHtml = `
+                        <div class="grid grid-cols-2 gap-2 text-xs text-slate-500 pl-4 border-l-2 border-slate-200">
+                            ${Object.keys(q.opsi || {}).map(key => `<div><strong>${key}.</strong> ${q.opsi[key]}</div>`).join('')}
+                        </div>
+                        <div class="text-xs font-bold text-slate-600">
+                            Kunci: <span class="text-emerald-600">${Array.isArray(q.kunci) ? q.kunci.join(', ') : q.kunci}</span>
+                        </div>
+                    `;
+                } else if (q.tipe === 'BS') {
+                    optionsListHtml = `
+                        <div class="space-y-1 text-xs text-slate-500 pl-4 border-l-2 border-slate-200">
+                            <div>1. ${q.pernyataan[0]} (Kunci: <strong>${q.kunci[0]}</strong>)</div>
+                            <div>2. ${q.pernyataan[1]} (Kunci: <strong>${q.kunci[1]}</strong>)</div>
+                            <div>3. ${q.pernyataan[2]} (Kunci: <strong>${q.kunci[2]}</strong>)</div>
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="flex flex-wrap items-center justify-between text-xs gap-2">
                         <span class="font-bold text-slate-400">SOAL #${idx+1} (${q.tipe})</span>
@@ -2141,34 +2188,7 @@
 
                     <div class="text-slate-800 text-sm leading-relaxed prose max-w-none math-render-target">${q.prompt}</div>
 
-                    ${q.tipe === 'PG' ? `
-                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-500 pl-4 border-l-2 border-slate-200">
-                        <div>A. ${q.opsi.A}</div>
-                        <div>B. ${q.opsi.B}</div>
-                        <div>C. ${q.opsi.C}</div>
-                        <div>D. ${q.opsi.D}</div>
-                        <div>E. ${q.opsi.E}</div>
-                    </div>
-                    <div class="text-xs font-bold text-slate-600">Kunci: <span class="text-emerald-600">${q.kunci}</span></div>
-                    ` : ''}
-
-                    ${q.tipe === 'MCMA' ? `
-                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-500 pl-4 border-l-2 border-slate-200">
-                        <div>A. ${q.opsi.A}</div>
-                        <div>B. ${q.opsi.B}</div>
-                        <div>C. ${q.opsi.C}</div>
-                        <div>D. ${q.opsi.D}</div>
-                    </div>
-                    <div class="text-xs font-bold text-slate-600">Kunci Multi: <span class="text-emerald-600">${q.kunci.join(', ')}</span></div>
-                    ` : ''}
-
-                    ${q.tipe === 'BS' ? `
-                    <div class="space-y-1 text-xs text-slate-500 pl-4 border-l-2 border-slate-200">
-                        <div>1. ${q.pernyataan[0]} (Kunci: <strong>${q.kunci[0]}</strong>)</div>
-                        <div>2. ${q.pernyataan[1]} (Kunci: <strong>${q.kunci[1]}</strong>)</div>
-                        <div>3. ${q.pernyataan[2]} (Kunci: <strong>${q.kunci[2]}</strong>)</div>
-                    </div>
-                    ` : ''}
+                    ${optionsListHtml}
 
                     <div class="flex justify-end space-x-3 border-t border-slate-100 pt-3 mt-2">
                         <button onclick="editSoal('${q.id}')" class="text-xs font-semibold text-primary-600 hover:text-primary-800"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
@@ -2186,17 +2206,20 @@
 
         function toggleSoalTypeInputs() {
             const type = document.getElementById('soalFormTipe').value;
-            document.getElementById('pgInputsContainer').classList.add('hidden');
-            document.getElementById('mcmaInputsContainer').classList.add('hidden');
+            document.getElementById('dynamicOptionsContainer').classList.add('hidden');
             document.getElementById('bsInputsContainer').classList.add('hidden');
 
-            if (type === 'PG') document.getElementById('pgInputsContainer').classList.remove('hidden');
-            if (type === 'MCMA') document.getElementById('mcmaInputsContainer').classList.remove('hidden');
-            if (type === 'BS') document.getElementById('bsInputsContainer').classList.remove('hidden');
+            if (type === 'PG' || type === 'MCMA') {
+                document.getElementById('dynamicOptionsContainer').classList.remove('hidden');
+                renderModalOptions();
+            } else if (type === 'BS') {
+                document.getElementById('bsInputsContainer').classList.remove('hidden');
+            }
 
             updateLiveSoalPreview();
         }
 
+        // RECAP TABLES CONTROLLERS
         function renderRekapTable(customData = null) {
             const tbody = document.getElementById('rekapTableBody');
             tbody.innerHTML = '';
@@ -2391,6 +2414,7 @@
             safeRenderMath(container);
         }
 
+        // DATA POPULATION & MODAL CONTROLLERS
         function openModal(type) {
             document.getElementById(`modal${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.remove('hidden');
             
@@ -2415,20 +2439,10 @@
                 document.getElementById('soalFormGambar').value = '';
                 document.getElementById('soalFormPembahasan').value = '';
                 
-                document.getElementById('soalOptA').value = '';
-                document.getElementById('soalOptB').value = '';
-                document.getElementById('soalOptC').value = '';
-                document.getElementById('soalOptD').value = '';
-                document.getElementById('soalOptE').value = '';
-
-                document.getElementById('soalOptMcmaA').value = '';
-                document.getElementById('soalOptMcmaB').value = '';
-                document.getElementById('soalOptMcmaC').value = '';
-                document.getElementById('soalOptMcmaD').value = '';
-                document.getElementById('mcmaKunciA').checked = false;
-                document.getElementById('mcmaKunciB').checked = false;
-                document.getElementById('mcmaKunciC').checked = false;
-                document.getElementById('mcmaKunciD').checked = false;
+                // Initialize default options: A, B, C, D (4 Options)
+                currentModalOptions = ['', '', '', ''];
+                currentFormPgKunci = 'A';
+                currentFormMcmaKunci = [];
 
                 document.getElementById('soalBs1').value = '';
                 document.getElementById('soalBs2').value = '';
@@ -2567,27 +2581,12 @@
             let kunci = '';
             let pernyataan = [];
 
-            if (tipe === 'PG') {
-                opsi = {
-                    A: document.getElementById('soalOptA').value.trim(),
-                    B: document.getElementById('soalOptB').value.trim(),
-                    C: document.getElementById('soalOptC').value.trim(),
-                    D: document.getElementById('soalOptD').value.trim(),
-                    E: document.getElementById('soalOptE').value.trim()
-                };
-                kunci = document.querySelector('input[name="pgKunci"]:checked').value;
-            } else if (tipe === 'MCMA') {
-                opsi = {
-                    A: document.getElementById('soalOptMcmaA').value.trim(),
-                    B: document.getElementById('soalOptMcmaB').value.trim(),
-                    C: document.getElementById('soalOptMcmaC').value.trim(),
-                    D: document.getElementById('soalOptMcmaD').value.trim()
-                };
-                kunci = [];
-                if (document.getElementById('mcmaKunciA').checked) kunci.push('A');
-                if (document.getElementById('mcmaKunciB').checked) kunci.push('B');
-                if (document.getElementById('mcmaKunciC').checked) kunci.push('C');
-                if (document.getElementById('mcmaKunciD').checked) kunci.push('D');
+            if (tipe === 'PG' || tipe === 'MCMA') {
+                currentModalOptions.forEach((text, idx) => {
+                    const letter = String.fromCharCode(65 + idx);
+                    opsi[letter] = text.trim();
+                });
+                kunci = (tipe === 'PG') ? currentFormPgKunci : currentFormMcmaKunci;
             } else if (tipe === 'BS') {
                 pernyataan = [
                     document.getElementById('soalBs1').value.trim(),
@@ -2637,22 +2636,14 @@
 
             toggleSoalTypeInputs();
 
-            if (q.tipe === 'PG') {
-                document.getElementById('soalOptA').value = q.opsi.A;
-                document.getElementById('soalOptB').value = q.opsi.B;
-                document.getElementById('soalOptC').value = q.opsi.C;
-                document.getElementById('soalOptD').value = q.opsi.D;
-                document.getElementById('soalOptE').value = q.opsi.E;
-                document.querySelector(`input[name="pgKunci"][value="${q.kunci}"]`).checked = true;
-            } else if (q.tipe === 'MCMA') {
-                document.getElementById('soalOptMcmaA').value = q.opsi.A;
-                document.getElementById('soalOptMcmaB').value = q.opsi.B;
-                document.getElementById('soalOptMcmaC').value = q.opsi.C;
-                document.getElementById('soalOptMcmaD').value = q.opsi.D;
-                document.getElementById('mcmaKunciA').checked = q.kunci.includes('A');
-                document.getElementById('mcmaKunciB').checked = q.kunci.includes('B');
-                document.getElementById('mcmaKunciC').checked = q.kunci.includes('C');
-                document.getElementById('mcmaKunciD').checked = q.kunci.includes('D');
+            if (q.tipe === 'PG' || q.tipe === 'MCMA') {
+                currentModalOptions = Object.values(q.opsi || {});
+                if (q.tipe === 'PG') {
+                    currentFormPgKunci = q.kunci || 'A';
+                } else {
+                    currentFormMcmaKunci = Array.isArray(q.kunci) ? q.kunci : [q.kunci];
+                }
+                renderModalOptions();
             } else if (q.tipe === 'BS') {
                 document.getElementById('soalBs1').value = q.pernyataan[0];
                 document.getElementById('soalBs2').value = q.pernyataan[1];
@@ -2748,17 +2739,6 @@
             const code = `/**
  * GOOGLE APPS SCRIPT DATABASE ENGINE FOR CBT-MODERN
  * Author: Senior Fullstack Developer / Architect
- * * Cara Penggunaan:
- * 1. Buka Google Spreadsheet Baru.
- * 2. Pilih menu Extensions > Apps Script.
- * 3. Hapus semua fungsi bawaan, lalu paste kode ini.
- * 4. Klik ikon Save (Floppy Disk).
- * 5. Klik Deploy > New Deployment.
- * 6. Set "Select type" ke "Web App".
- * 7. Set "Execute as" ke "Me" (Email Anda).
- * 8. Set "Who has access" ke "Anyone".
- * 9. Klik Deploy, lalu beri izin akses (Authorize).
- * 10. Salin URL Web App yang dihasilkan, dan tempel ke Setelan Database CBT-Modern!
  */
 
 const doc = SpreadsheetApp.getActiveSpreadsheet();
