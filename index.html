@@ -492,6 +492,10 @@
                             <i class="fa-solid fa-square-poll-horizontal w-5"></i>
                             <span>Rekap Hasil Ujian</span>
                         </button>
+                        <button onclick="setAdminTab('pengaturan')" id="tabBtn-pengaturan" class="admin-tab-btn w-full px-4 py-3 rounded-xl text-sm font-semibold transition flex items-center space-x-3 text-slate-600 hover:bg-slate-50">
+                            <i class="fa-solid fa-sliders w-5"></i>
+                            <span>Pengaturan CBT</span>
+                        </button>
                     </nav>
                 </div>
 
@@ -700,6 +704,28 @@
                                     <!-- Rendered dynamically -->
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <!-- TAB 7: PENGATURAN SYSTEM CBT -->
+                    <div id="adminTab-pengaturan" class="admin-panel-content hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-xl font-bold text-slate-900">Pengaturan Sistem & Ujian</h3>
+                            <p class="text-xs text-slate-500 mt-1">Konfigurasi parameter operasional pelaksanaan Computer Based Test (CBT).</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-6">
+                            <!-- Toggle Acak Soal -->
+                            <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                <div class="space-y-1 pr-4">
+                                    <h4 class="text-sm font-bold text-slate-800">Acak Urutan Soal Ujian</h4>
+                                    <p class="text-xs text-slate-500">Jika diaktifkan, urutan soal yang ditampilkan ke setiap siswa akan diacak secara acak (randomize) saat memulai ujian.</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                                    <input type="checkbox" id="settingAcakSoal" onchange="toggleSettingAcakSoal()" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -954,6 +980,7 @@
             gasUrl: localStorage.getItem('cbt_gas_url') || '',
             connected: false,
             activeTabAdmin: 'dashboard',
+            settings: JSON.parse(localStorage.getItem('cbt_settings')) || { acakSoal: false },
             
             siswaList: JSON.parse(localStorage.getItem('cbt_siswa')) || [
                 { id: 'S1', username: 'CBT-2026-001', password: '123', nama: 'Zahra Almira', status: true },
@@ -1212,6 +1239,7 @@
             localStorage.setItem('cbt_kategori', JSON.stringify(state.kategoriList));
             localStorage.setItem('cbt_soal', JSON.stringify(state.soalList));
             localStorage.setItem('cbt_rekap', JSON.stringify(state.rekapHasil));
+            localStorage.setItem('cbt_settings', JSON.stringify(state.settings));
         }
 
         // DATABASE INTEGRATION & SYNC ENGINES
@@ -1601,6 +1629,15 @@
                 return;
             }
 
+            // Shuffling/Randomizing questions if settings is enabled
+            if (state.settings && state.settings.acakSoal) {
+                for (let i = session.filteredQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [session.filteredQuestions[i], session.filteredQuestions[j]] = [session.filteredQuestions[j], session.filteredQuestions[i]];
+                }
+                logAdminActivity(`[SYSTEM] Soal diacak untuk ujian siswa: ${session.siswa.nama}`);
+            }
+
             enforceFullscreen();
 
             navigateTo('siswaExam');
@@ -1985,6 +2022,22 @@
             if (tabId === 'kategori') renderKategoriList();
             if (tabId === 'soal') renderQuestions();
             if (tabId === 'rekap') renderRekapTable();
+            if (tabId === 'pengaturan') loadSettingsView();
+        }
+
+        function loadSettingsView() {
+            const acakCheckbox = document.getElementById('settingAcakSoal');
+            if (acakCheckbox) {
+                acakCheckbox.checked = state.settings.acakSoal || false;
+            }
+        }
+
+        function toggleSettingAcakSoal() {
+            const acakCheckbox = document.getElementById('settingAcakSoal');
+            state.settings.acakSoal = acakCheckbox.checked;
+            saveToLocalStorage();
+            showToast(`Mode acak soal berhasil ${state.settings.acakSoal ? 'Diaktifkan' : 'Dinonaktifkan'}!`, "success");
+            logAdminActivity(`[CONFIG] Mode acak soal diubah menjadi: ${state.settings.acakSoal ? 'AKTIF' : 'NONAKTIF'}`);
         }
 
         function logAdminActivity(msg) {
